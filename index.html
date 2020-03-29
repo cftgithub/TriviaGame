@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +10,22 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
+
 <body>
-    <h1>Hi!</h1>
-    
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4 font-weight-bold">Dr. Seuss Trivia Game</h1>
+            <p class="lead">Test your Dr. Seuss IQ.</p>
+            <button class="button" id="start">Click to Play</button>
+        </div>
+    </div>
+    <div class="contain-fluid questions">
+        <div id="timer"></div>
+        <div id="slides">Insert questions and answers here</div>
+    </div>
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="assets/javascript/app.js"></script>
 </body>
+
 </html>
