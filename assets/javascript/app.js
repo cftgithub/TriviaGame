@@ -17,7 +17,7 @@
 
 $(document).ready(function () {
 
-    var questionsToDisplay = [{
+    var questionsInGame = [{
         question: "Dr. Seuss is a...",
         answers: ["pediatrician", "pen name", "surgeon", "professor"],
         correctAnswer: "pen name",
@@ -59,42 +59,116 @@ $(document).ready(function () {
         correctAnswer: "Sylvester McMonkey McBean",
     }];
 
+    var displayQuestion = function (currentQuestion) {   //currentQuestion is an array index
+        //currentQuestion = newQuestion;
+        $("#slides").html(questionsInGame[currentQuestion].question + "<br>");
+        for (i = 0; i < questionsInGame[currentQuestion].answers.length; i++) {
+            //display each answer in a button
+            $("#slides").append("<button id='answer" + i + "'>" + questionsInGame[currentQuestion].answers[i] + "</button>" + "<br>");
+        };
+        for (i = 0; i < questionsInGame[currentQuestion].correctAnswer.length; i++) {
+            $("#displayAnswer").html("The correct answer is: " + questionsInGame[currentQuestion].correctAnswer);
+        };
+    };
+
     // hides button after click and game starts    
     $("#start").click(function () {
         $("#start").hide(500);
-        // startGame();
-        
-        // this is the timer
-        var countDown = 20
-        var timer = setInterval(function () {
-            if (countDown <= 0) {
-                clearInterval(timer);
-                document.getElementById("timer").innerHTML = "Out of time";
-            } else {
-                document.getElementById("timer").innerHTML = "Time remaining: " + countDown;
+        var newQuestion = -1;
+        nextQuestion();
+
+        function nextQuestion() {
+            newQuestion = newQuestion + 1;
+            console.log(newQuestion);
+            if (newQuestion >= questionsInGame.length) {
+                results();
+                return;
             }
-            countDown -= 1;
-        }, 1000);
+            //answerToDisplay = newQuestion;
+            //console.log(answerToDisplay);
+            displayQuestion(newQuestion);
+            startTimer();
+        };
+
+        var wrong = 0;
+        var correct = 0;
+        var unanswered = 0;
+        var timer;
+
+        // starts timer and displays questions and hides answer
+        function startTimer() {
+            $("#displayAnswer").hide(0);
+            // var answerToDisplay = []; 
+
+            var countDown = 3; // 1 less than desired time
+            document.getElementById("timer").innerHTML = "Time remaining: " + (countDown + 1);
+            timer = setInterval(function () {
+                if (countDown <= 0) {
+                    clearInterval(timer); //makes the timer stop
+                    $("button").attr("disabled", "disabled");   //disable buttons
+                    document.getElementById("timer").innerHTML = "Time's Up!";
+                    //display correct answer
+                    $("#displayAnswer").show(0);
+                    unanswered = unanswered + 1;
+                    console.log("unanswered:" + unanswered);
+                    setTimeout(function () {
+
+                        nextQuestion();
+                        // displayQuestion(newQuestion);
+                        // startTimer();   //this is recursion
+                    }, 2000);
+                } else {
+                    document.getElementById("timer").innerHTML = "Time remaining: " + countDown;
+                };
+                countDown = countDown - 1;  //countdown -= 1;
+                console.log(countDown);
+            }, 1000);
+        };
+
+
+        // var correctAnswer = questionsInGame[newQuestion].correctAnswer;
+        // console.log("correct: " + correctAnswer);
+
+        $(document).on("click", "#answer0", function () {
+            optionsClicked("answer0");
+        });
+        $(document).on("click", "#answer1", function () {
+            optionsClicked("answer1");
+        });
+        $(document).on("click", "#answer2", function () {
+            optionsClicked("answer2");
+        });
+        $(document).on("click", "#answer3", function () {
+            optionsClicked("answer3");
+        });
+
+        function optionsClicked(possAns) {
+            clearInterval(timer);
+            $("#displayAnswer").show(0);
+            console.log("clicked: " + document.getElementById(possAns).textContent);
+            var ansChosen = document.getElementById(possAns).textContent;
+            var correctAnswer = questionsInGame[newQuestion].correctAnswer;
+            console.log("correct: " + correctAnswer);
+            if (ansChosen === correctAnswer) {
+                document.getElementById(possAns).style.backgroundColor = 'green';
+                correct = correct + 1;
+                console.log("correct:" + correct);
+            } else {
+                document.getElementById(possAns).style.backgroundColor = 'red';
+                wrong = wrong + 1;
+                console.log("wrong:" + wrong);
+            }
+            $("button").attr("disabled", "disabled");
+            setTimeout(nextQuestion, 2000);
+        }
+
+        function results(){
+            $("#main").html("Results:" + "<br>" + "Correct Answers: " + correct + "<br>" 
+            + "Wrong Answers: " + wrong + "<br>" + "Unanswered: " + unanswered + "<br>"
+            + "<button id='start'>Click to Replay</button>");
+            
+        }
     });
 
-    function startGame() {
-        $("#slides").html(questionsToDisplay);
-        for (i = 0; i < questionsToDisplay.length; i++);
-        console.log(questionsToDisplay);
-    };
-
-
-
-
-    // $("#slides").html(questionsToDisplay.question [i]+ '<br>' + questionsToDisplay.answers[i]);
-    // };
-
-    setTimeout
-
-    // function answerCorrect ()
-
-    // function answerWrong ()
-
-    // function notAnswered ()
 });
 

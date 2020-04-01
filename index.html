@@ -12,16 +12,17 @@
 </head>
 
 <body>
-    <div class="jumbotron jumbotron-fluid">
+    <div class="jumbotron jumbotron-fluid" id="img">
         <div class="container">
             <h1 class="display-4 font-weight-bold">Dr. Seuss Trivia Game</h1>
-            <p class="lead">Test your Dr. Seuss IQ.</p>
-            <button class="button" id="start">Click to Play</button>
+            <p class="lead font-weight-bold">Test your Dr. Seuss IQ.</p>
         </div>
     </div>
-    <div class="contain-fluid questions">
-        <div id="timer"></div>
-        <div id="slides">Insert questions and answers here</div>
+    <div class="contain-fluid questions text-center" id="main">
+        <button class="button" id="start">Click to Play</button>
+        <div id="timer" class="font-weight-bold"></div>
+        <div id="slides"></div>
+        <div id="displayAnswer" class="text-center"></div>
     </div>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
