@@ -5,8 +5,13 @@
     background-size: cover;
     background-repeat: no-repeat;
     border: 10px solid rgb(245, 227, 65);
-    background-color: rgba(177, 241, 241);
+    background-image: url("../images/wormz/wormz.png");
 }
+/* .jumbotron {
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    height: 300px;
+} */
 body {
     background-image: url("../images/background1.jpg");
     width: 100%;
@@ -14,6 +19,7 @@ body {
     background-size: cover;
 }
 #main {
+    background-image: url("../images/wormz/wormz.png");
     background-color: rgb(245, 237, 170);
     border: 10px solid rgb(245, 227, 65);
     margin: 100px 200px;

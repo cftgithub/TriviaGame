@@ -17,7 +17,7 @@
 
 $(document).ready(function () {
 
-    var questionsInGame = [{
+    questionsInGame = [{
         question: "Dr. Seuss is a...",
         answers: ["pediatrician", "pen name", "surgeon", "professor"],
         correctAnswer: "pen name",
@@ -72,22 +72,29 @@ $(document).ready(function () {
     };
 
     // hides button after click and game starts    
-    $("#start").click(function () {
+    $(document).on("click", "#start", function () {
         $("#start").hide(500);
+        $('.game').show();
+        $('.results').hide();
         var newQuestion = -1;
+
+        console.log("New question num: " + newQuestion);
         nextQuestion();
 
         function nextQuestion() {
+          
             newQuestion = newQuestion + 1;
             console.log(newQuestion);
             if (newQuestion >= questionsInGame.length) {
+                newQuestion = 0;
                 results();
                 return;
+            } else {
+                //answerToDisplay = newQuestion;
+                //console.log(answerToDisplay);
+                displayQuestion(newQuestion);
+                startTimer();
             }
-            //answerToDisplay = newQuestion;
-            //console.log(answerToDisplay);
-            displayQuestion(newQuestion);
-            startTimer();
         };
 
         var wrong = 0;
@@ -100,7 +107,7 @@ $(document).ready(function () {
             $("#displayAnswer").hide(0);
             // var answerToDisplay = []; 
 
-            var countDown = 3; // 1 less than desired time
+            var countDown = 14; // 1 less than desired time
             document.getElementById("timer").innerHTML = "Time remaining: " + (countDown + 1);
             timer = setInterval(function () {
                 if (countDown <= 0) {
@@ -145,6 +152,7 @@ $(document).ready(function () {
         function optionsClicked(possAns) {
             clearInterval(timer);
             $("#displayAnswer").show(0);
+            console.log("new question is " +newQuestion);
             console.log("clicked: " + document.getElementById(possAns).textContent);
             var ansChosen = document.getElementById(possAns).textContent;
             var correctAnswer = questionsInGame[newQuestion].correctAnswer;
@@ -162,13 +170,17 @@ $(document).ready(function () {
             setTimeout(nextQuestion, 2000);
         }
 
-        function results(){
-            $("#main").html("Results:" + "<br>" + "Correct Answers: " + correct + "<br>" 
-            + "Wrong Answers: " + wrong + "<br>" + "Unanswered: " + unanswered + "<br>"
-            + "<button id='start'>Click to Replay</button>");
-            
-        }
-    });
+        function results() {
+            $('.game').hide();
+            $('.results').show();
+            $(".results").html("Results:" + "<br>" + "Correct Answers: " + correct + "<br>"
+                + "Wrong Answers: " + wrong + "<br>" + "Unanswered: " + unanswered + "<br>"
+                + "<button id='start'>Click to Play Again!</button>");
+              
 
+        }
+
+
+    });
 });
 
